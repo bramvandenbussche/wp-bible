@@ -40,9 +40,9 @@ Please let me know if you'd like to add other book names that the plugin doesn't
 
 == Screenshots ==
 
-4. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it being linked.
-5. When you move your mouse above the link, a layer with biblical text is displayed.
-6. This is the Administration interface
+1. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it being linked.
+2. When you move your mouse above the link, a layer with biblical text is displayed.
+3. This is the Administration interface
 
 == Frequently Asked Questions ==
 
