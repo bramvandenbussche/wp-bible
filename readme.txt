@@ -4,15 +4,15 @@ Donate link: http://matej.nastran.net/donate/
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.6
+Stable tag: 1.6.1
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
 == Description ==
 
-WP-Bible searches your posts and pages for any referece to a Bible passage and converts the link to actal biblical text - which can be any of the 38 translations that you can see at [BIBLIJA.net](http://www.biblija.net/ "BIBLIJA.net"). Here is the list of all 14 languages supported:
+WP-Bible searches your posts and pages for any reference to a Bible passage and converts the link to actual biblical text - which can be any of the 38 translations that you can see at [BIBLIJA.net](http://www.biblija.net/ "BIBLIJA.net"). There are 14 languages supported
 
-No special tegging of biblical references is needed, the plugin recognises different (up to 12) names for the same book in the Bible (for example: you can type Matthew 5:1-11 or Mat 5:1-11 or Mt 5:1-11 or you can even use other standards for marking biblical references like Mat 5,1-11.15-17;6,1-3. All this will do.
+No special tagging of biblical references is needed, the plugin recognizes different (up to 12) names for the same book in the Bible (for example: you can type Matthew 5:1-11 or Mat 5:1-11 or Mt 5:1-11 or you can even use other standards for marking biblical references like Mat 5,1-11.15-17;6,1-3. All this will do.
 Plugin then changes the reference for a link and when you click the link a small layer is shown above containing the biblical text. No opening other windows, no popups. 
 
 == Installation ==
@@ -23,13 +23,13 @@ The default bible version is `World English Bible - WEB`, if you want to change 
 
 == Screenshots ==
 
-1. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it beeing linked.
-2. When you move your mouse avove the link, a layer with biblical text is displayed.
+1. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it being linked.
+2. When you move your mouse above the link, a layer with biblical text is displayed.
 3. This is the Administration interface
 
 == Usage Instructions ==
 
-When your plugin is activated yust type the usual biblical references and the plugin will find them.
+When your plugin is activated just type the usual biblical references and the plugin will find them.
 
 Usually they look like:
 
@@ -39,7 +39,7 @@ Usually they look like:
    
 You can use many different book names, let's see just an example for Gospel of Matthew: Mt, Mat, Matt, Matej, Matevž, Matthew, Matteüs, Matteus, Matthäus, Mateo.
 As you can see not only English names are supported.
-Please let me know if you'd like to add other book names that the plugin doesn't recognise.
+Please let me know if you'd like to add other book names that the plugin doesn't recognize.
 
 
 = Available Bible Versions  =

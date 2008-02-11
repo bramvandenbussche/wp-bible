@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: WP-Bible plugin
-Plugin URI: http://matej.nastran.net/wp-bible/
+Plugin Name: WP-Bible
+Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.6
+Version: 1.6.1
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -276,7 +276,7 @@ function biblija_showhide (id){
    obj.style.zIndex = biblija_cnt++;
 }
 </script>
-<link rel="stylesheet" href="<?php echo bloginfo('url'); ?>/wp-content/plugins/wp_bible/wp_bible.css">
+<link rel="stylesheet" href="<?php echo bloginfo('url'); ?>/wp-content/plugins/wp-bible/wp_bible.css">
          <?php
 }
 
