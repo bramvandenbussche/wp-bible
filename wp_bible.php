@@ -29,7 +29,7 @@ require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register"))
    include ("matej_register_en.php");
 
-$biblija_version = "1.6";
+$biblija_version = "1.6.1";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
