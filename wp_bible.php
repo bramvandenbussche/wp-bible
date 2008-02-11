@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.6.2
+Version: 1.6.3
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -29,7 +29,7 @@ require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register"))
    include ("matej_register_en.php");
 
-$biblija_version = "1.6.2";
+$biblija_version = "1.6.3";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
@@ -187,8 +187,10 @@ usort($moje_knjige, "my_cmp");
 uasort($bible_ver, "version_cmp");
 
 $wp_bible_default_version = get_option('wp_bible_default_version');
-if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version])))
-   $wp_bible_default_version = 1;
+if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version]))){
+   $wp_bible_default_version = 15;
+   update_option('wp_bible_default_version', $wp_bible_default_version);
+}
 
 
 $biblija_url1 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&m=";
@@ -207,7 +209,9 @@ function biblija_admin_action()
         update_option('wp_bible_default_version', $_POST['wp_bible_default_version']);
 	   $table_name = $wpdb->prefix . "wp_bible";
 	   $wpdb->query ("TRUNCATE TABLE $table_name;");
-	   echo '<div class="updated"><p><strong>'._e('Settings updated!', 'Biblija')."</strong></p></div>";
+	   echo '<div class="updated"><p><strong>';
+	   _e('Settings updated!', 'Biblija');
+	   echo "</strong></p></div>";
    }
    ?>
    <div class="wrap">

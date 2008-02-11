@@ -4,7 +4,7 @@ Donate link: http://matej.nastran.net/donate/
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
