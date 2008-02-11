@@ -323,7 +323,7 @@ function biblija_the_content($content) {
                           }    
                           $content = is_feed() ?
                                    str_replace ($curr_match, "<a class=\"biblija_link\">$match_encoded</a>", $content)
-                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
+                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\"><b>WP-Bible plugin</b></a></span></span>", $content);
                   }
                }
          }
