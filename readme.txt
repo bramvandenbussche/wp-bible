@@ -10,7 +10,7 @@ Plugin finds Bible references in your posts and changes them for the actual Bibl
 
 == Description ==
 
-WP-Bible searches your posts and pages for any reference to a Bible passage and converts the link to actual biblical text - which can be any of the 38 translations that you can see at [BIBLIJA.net](http://www.biblija.net/ "BIBLIJA.net"). There are 14 languages supported.
+WP-Bible searches your posts and pages for any reference to a Bible passage and converts the reference to an actual biblical text - which can be any of the 38 translations (in 14 different languages) that you can see at [BIBLIJA.net](http://www.biblija.net/ "BIBLIJA.net").
 
 No special tagging of biblical references is needed, the plugin recognizes different (up to 12) names for the same book in the Bible (for example: you can type Matthew 5:1-11 or Mat 5:1-11 or Mt 5:1-11 or you can even use other standards for marking biblical references like Mat 5,1-11.15-17;6,1-3. All this will do.
 Plugin then changes the reference for a link and when you click the link a small layer is shown above containing the biblical text. No opening other windows, no popups. 
