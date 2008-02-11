@@ -4,30 +4,26 @@ Donate link: http://matej.nastran.net/donate/
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
 == Description ==
 
-WP-Bible searches your posts and pages for any reference to a Bible passage and converts the reference to an actual biblical text - which can be any of the 38 translations (in 14 different languages) that you can see at [BIBLIJA.net](http://www.biblija.net/ "BIBLIJA.net").
+WP-Bible searches your posts and pages for any reference to a Bible passage and converts the reference to an actual biblical text - which can be any of the 38 translations (in 14 different languages) that you can see at [BIBLIJA.net](http://www.biblija.net/biblija.cgi?set=5&lang=en "BIBLIJA.net").
 
 No special tagging of biblical references is needed, the plugin recognizes different (up to 12) names for the same book in the Bible (for example: you can type Matthew 5:1-11 or Mat 5:1-11 or Mt 5:1-11 or you can even use other standards for marking biblical references like Mat 5,1-11.15-17;6,1-3. All this will do.
 Plugin then changes the reference for a link and when you click the link a small layer is shown above containing the biblical text. No opening other windows, no popups. 
 
 == Installation ==
 
+= Installation =
+
 You must download wp-bible.zip and unzip the content to `/wp-content/plugins/` directory. Then you must activate the plugin in the `Plugins menu` of your blog's Administration panel. 
 
 The default bible version is `World English Bible - WEB`, if you want to change that, go to `Options | WP-Bible` and choose a version you want.
 
-== Screenshots ==
-
-1. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it being linked.
-2. When you move your mouse above the link, a layer with biblical text is displayed.
-3. This is the Administration interface
-
-== Usage Instructions ==
+= Usage =
 
 When your plugin is activated just type the usual biblical references and the plugin will find them.
 
@@ -42,7 +38,18 @@ As you can see not only English names are supported.
 Please let me know if you'd like to add other book names that the plugin doesn't recognize.
 
 
-= Available Bible Versions  =
+== Screenshots ==
+
+1. This screenshot shows the text with a reference to one biblical passage (Mt 5:1-11) and you can see it being linked.
+2. When you move your mouse above the link, a layer with biblical text is displayed.
+3. This is the Administration interface
+
+== Frequently Asked Questions ==
+
+= Contact information =
+You can find my blog and contact me at [http://matej.nastran.net/](http://matej.nastran.net/ "visit my blog!")
+
+= Which Bible translations are included? =
 
 You can choose the bible text from any of the following versions:
  
@@ -84,9 +91,4 @@ You can choose the bible text from any of the following versions:
 1. Spanish: Biblia Dios Habla Hoy - DHH
 1. Spanish: Biblia Reina Valera - revisión de 1995 - RVR95E
 1. Spanish: Biblia Reina Valera - revisión de 1995 (Texto) - RVR95
-
-== Frequently Asked Questions ==
-
-= Contact information =
-I'm [Matej Nastran](http://matej.nastran.net/ "Contact Matej Nastran")
-
+ 

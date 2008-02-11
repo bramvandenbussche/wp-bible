@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.6.1
+Version: 1.6.2
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -29,11 +29,11 @@ require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register"))
    include ("matej_register_en.php");
 
-$biblija_version = "1.6.1";
+$biblija_version = "1.6.2";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
-$biblija_snoopy->agent = "WP-Bible plugin/".$biblija_version." (+http://matej.nastran.net/wp-bible/)";
+$biblija_snoopy->agent = "WP-Bible plugin/".$biblija_version." (+http://wordpress.org/extend/plugins/wp-bible/)";
 
 $bible_ver[1] = "Slovenian: Slovenski standardni prevod (1997) - SSP";
 $bible_ver[4] = "Slovenian: Jubilejni prevod NZ (1984) - JUB";
@@ -122,7 +122,7 @@ $biblija_knjige[] = array ("Apd", "Dej", "DejAp", "Act", "Ac", "Hand", "Hnd", "A
 $biblija_knjige[] = array ("Rim", "Rimlj", "Rom", "Röm", "Ro", "Rm", "R", "Erm", "Rimljanom", "Romans", "Romeinen", "Römer", "Romanos");
 $biblija_knjige[] = array ("1 Kor", "1 Cor", "1 Co", "1 Ko", "1 K", "1 Korinčanom", "1 Corinthians", "1 Korintiërs", "1 Korintiers", "1 Korinthe", "1 Korinther", "1 Corintios");
 $biblija_knjige[] = array ("2 Kor", "2 Cor", "2 Co", "2 Ko", "2 K", "2 Korinčanom", "2 Corinthians", "2 Korintiërs", "2 Korintiers", "2 Korinthe", "2 Korinther", "2 Corintios");
-$biblija_knjige[] = array ("Gal", "Ga", "Gl", "G", "Galačanom", "Galatians", "Galaten", "Galater", "Gálatas");
+$biblija_knjige[] = array ("Gal", "Ga", "Gl", "Galat", "G", "Galačanom", "Galatians", "Galaten", "Galater", "Gálatas");
 $biblija_knjige[] = array ("Ef", "Efež", "Éfez", "Efez", "Eph", "Éph", "Ep", "E", "Efežanom", "Ephesians", "Efeziërs", "Efeziers", "Efeze", "Epheser", "Efesios");
 $biblija_knjige[] = array ("Flp", "Filip", "Filipp", "Fil", "Fl", "Php", "Ph", "Phil", "Phili", "Filipljanom", "Philippians", "Filippenzen", "Philipper", "Filipenses");
 $biblija_knjige[] = array ("Kol", "Col", "Kološanom", "Colossians", "Kolossenzen", "Kolosser", "Colosenses");
@@ -193,7 +193,7 @@ if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_defau
 
 $biblija_url1 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&m=";
 $biblija_url2 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&l=sl&t=3&m=";
-$plugin_url = "http://matej.nastran.net/wp-bible/";
+$plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 
         
 
@@ -321,7 +321,7 @@ function biblija_the_content($content) {
                           }    
                           $content = is_feed() ?
                                    str_replace ($curr_match, "<a class=\"biblija_link\">$match_encoded</a>", $content)
-                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">WP-Bible: $match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible version $biblija_version\">WP-Bible</a></span></span>", $content);
+                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
                   }
                }
          }
