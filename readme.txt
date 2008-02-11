@@ -23,6 +23,8 @@ You must download wp-bible.zip and unzip the content to `/wp-content/plugins/` d
 
 The default bible version is `World English Bible - WEB`, if you want to change that, go to `Options | WP-Bible` and choose a version you want.
 
+Using another plugin that does a similar thing is not advised. 
+
 = Usage =
 
 When your plugin is activated just type the usual biblical references and the plugin will find them.
