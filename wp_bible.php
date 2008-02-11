@@ -209,13 +209,11 @@ function biblija_admin_action()
         update_option('wp_bible_default_version', $_POST['wp_bible_default_version']);
 	   $table_name = $wpdb->prefix . "wp_bible";
 	   $wpdb->query ("TRUNCATE TABLE $table_name;");
-	   echo '<div class="updated"><p><strong>';
-	   _e('Settings updated!', 'Biblija');
-	   echo "</strong></p></div>";
+	   echo '<div class="updated"><p><strong>'.__('Settings updated!', 'wp-bible')."</strong></p></div>";
    }
    ?>
    <div class="wrap">
-    <h2><?php _e('WP-Bible default bible version', 'Biblija'); ?></h2>
+    <h2><?php _e('WP-Bible default bible version', 'wp-bible'); ?></h2>
         <form method="post">
 <br />
            <select name="wp_bible_default_version">
@@ -234,7 +232,7 @@ function biblija_admin_action()
 			</select>
 			<br />
 			<br />
-        <input type="submit" name="biblija_update" value="<?php _e('Update Options', 'Biblija') ?>" />
+        <input type="submit" name="biblija_update" value="<?php _e('Update Options', 'wp-bible') ?>" />
     </p>
     </form>
    </div>
