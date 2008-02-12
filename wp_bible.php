@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.6.4
+Version: 1.7
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -31,7 +31,7 @@ require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register2"))
    include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
 
-$biblija_version = "1.6.4";
+$biblija_version = "1.7";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
