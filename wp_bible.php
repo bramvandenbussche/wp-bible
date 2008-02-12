@@ -264,7 +264,7 @@ add_action('admin_menu', 'biblija_add_plugin_to_admin_menu');
 add_filter('the_content', 'biblija_the_content');
 add_action('wp_head', 'biblija_head');
 
-matej_register ("wp_bible", $biblija_version);
+matej_register2 ("wp_bible", $biblija_version);
 
 
 function to_ord ($str){
