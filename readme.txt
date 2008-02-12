@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donat
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.7
+Stable tag: 1.7.1
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
@@ -96,6 +96,7 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
+*   1.7.1: fixed a bug that prevented linking references like John 5:6-6:3 
 *   1.7: added i18n of the admin interface (previously only in English), users invited to translate POT file for their locale and send it to me 
 *   1.6: added support for 38 different bible versions in 14 languages (previous versions supported only Slovenian).
 *   1.5: changed the registration of the plugin

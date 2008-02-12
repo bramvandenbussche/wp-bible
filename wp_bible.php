@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7
+Version: 1.7.1
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,6 +25,9 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+$biblija_version = "1.7.1";
+
+
 if (!defined('ABSPATH'))
 	die("Hello world!");
 
@@ -35,7 +38,6 @@ require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register2"))
    include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
 
-$biblija_version = "1.7";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
@@ -339,7 +341,7 @@ function biblija_the_content($content) {
 
          $table_name = $wpdb->prefix . "wp_bible";
          foreach ($moje_knjige as $knjiga){
-               $reg = "@$knjiga [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.]*[0-9]@mi";
+               $reg = "@$knjiga [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]@mi";
                if (preg_match_all($reg, $content, $matches, PREG_PATTERN_ORDER)){
                   foreach ($matches[0] as $curr_match){
                           $match_encoded = to_ord($curr_match);
