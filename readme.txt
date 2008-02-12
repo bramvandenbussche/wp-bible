@@ -94,3 +94,15 @@ You can choose the bible text from any of the following versions:
 1. Spanish: Biblia Reina Valera - revisión de 1995 - RVR95E
 1. Spanish: Biblia Reina Valera - revisión de 1995 (Texto) - RVR95
  
+== Changelog ==
+
+*   1.7: added i18n of the admin interface (previously only in English), users invited to translate POT file for their locale and send it to me 
+*   1.6: added support for 38 different bible versions in 14 languages (previous versions supported only Slovenian).
+*   1.5: changed the registration of the plugin
+*   1.4: no more adding bible text in RSS feed, only linking
+*   1.3: added dashboard tab for plugin which checks for plugin updates
+*   1.2: formatting now in a separate CSS file.
+*   1.1: plugin now get the actual bible text from BIBLIJA.net and shows it in the posts/pages.
+*   1.0: first public version which only linked the passages to BIBLIJA.net
+
+Versions in between were minor changes and bug fixes.
