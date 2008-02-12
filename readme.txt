@@ -1,6 +1,6 @@
 === WP-Bible ===
 Contributors: matejn
-Donate link: http://matej.nastran.net/donate/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donate%40nastran%2enet&item_name=WP%2dBible%20plugin&page_style=Primary&no_shipping=1&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
