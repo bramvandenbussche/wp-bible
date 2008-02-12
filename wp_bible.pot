@@ -1,0 +1,34 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP- Bible\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-12 14:40+0100\n"
+"PO-Revision-Date: 2008-02-12 14:45+0100\n"
+"Last-Translator: Matej Nastran <matej@nastran.net>\n"
+"Language-Team: Matej Nastran <matej@nastran.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: SLOVENIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: c:\\matej\\internet\\www\\matej\\blog\\wp_bible\n"
+
+#: wp_bible.php:223
+msgid "Settings updated!"
+msgstr ""
+
+#: wp_bible.php:227
+msgid "WP-Bible default bible version"
+msgstr ""
+
+#: wp_bible.php:240
+msgid "Bible text layer width (in pixels)"
+msgstr ""
+
+#: wp_bible.php:245
+msgid "Update Options"
+msgstr ""
+

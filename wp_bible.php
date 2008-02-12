@@ -25,8 +25,10 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+load_plugin_textdomain("wp_bible", 'wp-content/plugins/wp-bible');
+
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
-if (!function_exists("matej_register"))
+if (!function_exists("matej_register2"))
    include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
 
 $biblija_version = "1.6.4";
@@ -220,11 +222,11 @@ function biblija_admin_action()
         update_option('wp_bible_default_version', $wp_bible_default_version);
 	   $table_name = $wpdb->prefix . "wp_bible";
 	   $wpdb->query ("TRUNCATE TABLE $table_name;");
-	   echo '<div class="updated"><p><strong>'.__('Settings updated!', 'wp-bible')."</strong></p></div>";
+	   echo '<div class="updated"><p><strong>'.__('Settings updated!', 'wp_bible')."</strong></p></div>";
    }
    ?>
    <div class="wrap">
-    <h2><?php _e('WP-Bible default bible version', 'wp-bible'); ?></h2>
+    <h2><?php _e('WP-Bible default bible version', 'wp_bible'); ?></h2>
         <form method="post">
 <br />
            <select name="wp_bible_default_version">
@@ -236,19 +238,19 @@ function biblija_admin_action()
 			?>
 			</select>
 			<br />
-			<br />
-			<label for="biblija_width"><b><?php _e("Bible text layer width (in pixels):", "wp-bible"); ?></b>
+			<br /> 
+			<label for="biblija_width"><b><?php _e("Bible text layer width (in pixels)", "wp_bible"); ?>:</b>&nbsp;
 				  <input type="text" size="5" name="biblija_width" value="<?php echo $wp_bible_default_width; ?>" />
 			</label>
         		<br />
     <p class="submit">
-        <input type="submit" name="biblija_update" value="<?php _e('Update Options', 'wp-bible') ?>" />
+        <input type="submit" name="biblija_update" value="<?php _e('Update Options', 'wp_bible') ?>" />
     </p>
     </form>
    </div>
 
 <?php
-   matej_update ("wp_bible", "WP-Bible Plugin", $biblija_version);
+   matej_info ();
 
 }
 
@@ -367,7 +369,7 @@ function biblija_the_content($content) {
                           }    
                           $content = is_feed() ?
                                    str_replace ($curr_match, "<a class=\"biblija_link\">$match_encoded</a>", $content)
-                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><b><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></b></span></span>", $content);
+                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
                   }
                }
          }
@@ -396,6 +398,5 @@ function check_table (){
  }
 
 check_table ();
-
 
 ?>
