@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.6.3
+Version: 1.6.4
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -27,9 +27,9 @@ Author URI: http://matej.nastran.net/
 
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register"))
-   include ("matej_register_en.php");
+   include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
 
-$biblija_version = "1.6.3";
+$biblija_version = "1.6.4";
 
 /* First, we need to make an instance of the class */
 $biblija_snoopy = new Snoopy();
@@ -186,6 +186,12 @@ function version_cmp($a, $b)
 usort($moje_knjige, "my_cmp");
 uasort($bible_ver, "version_cmp");
 
+$wp_bible_default_width = get_option('wp_bible_default_width');
+if (((int)$wp_bible_default_width) == 0){
+   $wp_bible_default_width = 300;
+   update_option('wp_bible_default_width', $wp_bible_default_width);
+}
+
 $wp_bible_default_version = get_option('wp_bible_default_version');
 if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version]))){
    $wp_bible_default_version = 15;
@@ -203,10 +209,15 @@ $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 // kaj in kje točno naj se izpiše v admin vmesniku 
 function biblija_admin_action()
 {
-   global $biblija_version, $bible_ver, $wpdb;
+   global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version;
 
     if (isset($_POST['biblija_update'])) {
-        update_option('wp_bible_default_version', $_POST['wp_bible_default_version']);
+    	  if ((int)$_POST['biblija_width'])
+    	  	$wp_bible_default_width = $_POST['biblija_width'];
+        update_option('wp_bible_default_width', $wp_bible_default_width);
+        if ((int)$_POST['wp_bible_default_version'])
+        	 $wp_bible_default_version = $_POST['wp_bible_default_version'];
+        update_option('wp_bible_default_version', $wp_bible_default_version);
 	   $table_name = $wpdb->prefix . "wp_bible";
 	   $wpdb->query ("TRUNCATE TABLE $table_name;");
 	   echo '<div class="updated"><p><strong>'.__('Settings updated!', 'wp-bible')."</strong></p></div>";
@@ -218,12 +229,6 @@ function biblija_admin_action()
 <br />
            <select name="wp_bible_default_version">
 		   <?php
-			if (get_option('wp_bible_default_version') == ''){
-                    $wp_bible_default_version=1;
-                }else {
-                 $wp_bible_default_version=get_option('wp_bible_default_version');
-            }
-
 			foreach ($bible_ver as $key => $value) {
                     $bible_selected = $key == $wp_bible_default_version ? "selected" : "";
 					echo "<option $bible_selected value='$key'>$value</option>\n";
@@ -232,6 +237,11 @@ function biblija_admin_action()
 			</select>
 			<br />
 			<br />
+			<label for="biblija_width"><b><?php _e("Bible text layer width (in pixels):", "wp-bible"); ?></b>
+				  <input type="text" size="5" name="biblija_width" value="<?php echo $wp_bible_default_width; ?>" />
+			</label>
+        		<br />
+    <p class="submit">
         <input type="submit" name="biblija_update" value="<?php _e('Update Options', 'wp-bible') ?>" />
     </p>
     </form>
@@ -264,21 +274,55 @@ function to_ord ($str){
 }
 
 function biblija_head (){
+	    global $wp_bible_default_width;
+	    
          ?>
-<script type="text/javascript">         
+		<script type="text/javascript">         
+		
+			var biblija_cnt = 0;
+			
+			function biblija_showhide (id){
+				var obj = document.getElementById(id);
+				if (obj.style.visibility == "visible")
+			  		obj.style.visibility = "hidden";
+				else
+			  	obj.style.visibility = "visible";
+			   obj.style.zIndex = biblija_cnt++;
+			}
+		</script>
 
-var biblija_cnt = 0;
+		<style type="text/css" id="wp-bible">
+			sup {
+			     font-size: 70%;
+			     vertical-align: top;
+			}
+			
+			.biblija_lay {
+			      visibility: hidden; 
+			      background:#FFFFFF;
+			      border:1px double #000000;
+			      color:#000000;
+			      font-size:90%;
+			      font-style:normal;
+			      font-variant:normal;
+			      font-weight:normal;
+			      letter-spacing:normal;
+			      line-height:normal;
+			      margin:0px;
+			      opacity:0.9;
+			      overflow:visible;
+			      padding:10px;
+			      text-align:left;
+			      text-indent:0pt;
+			      text-transform:none;
+			      vertical-align:baseline;
+			      position: absolute;
+			      visibility:hidden;
+			      width: <?php echo "$wp_bible_default_width"."px;"; ?>
+			      word-spacing:normal;
+			}
+		</style>
 
-function biblija_showhide (id){
-	var obj = document.getElementById(id);
-	if (obj.style.visibility == "visible")
-  		obj.style.visibility = "hidden";
-	else
-  	obj.style.visibility = "visible";
-   obj.style.zIndex = biblija_cnt++;
-}
-</script>
-<link rel="stylesheet" href="<?php echo bloginfo('url'); ?>/wp-content/plugins/wp-bible/wp_bible.css">
          <?php
 }
 
@@ -323,7 +367,7 @@ function biblija_the_content($content) {
                           }    
                           $content = is_feed() ?
                                    str_replace ($curr_match, "<a class=\"biblija_link\">$match_encoded</a>", $content)
-                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\"><b>WP-Bible plugin</b></a></span></span>", $content);
+                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><b><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></b></span></span>", $content);
                   }
                }
          }
