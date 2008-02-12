@@ -282,13 +282,12 @@ function to_ord ($str){
 }
 
 function biblija_head (){
-	    global $wp_bible_default_width;
+	    global $wp_bible_default_width, $biblija_version;
 	    
-         ?>
-		<script type="text/javascript">         
-		
+	    echo "\n\n<!-- WP-Bible plugin version $biblija_version -->\n";
+	    
+         ?>	<script type="text/javascript">         
 			var biblija_cnt = 0;
-			
 			function biblija_showhide (id){
 				var obj = document.getElementById(id);
 				if (obj.style.visibility == "visible")
@@ -298,40 +297,12 @@ function biblija_head (){
 			   obj.style.zIndex = biblija_cnt++;
 			}
 		</script>
-
 		<style type="text/css" id="wp-bible">
-			sup {
-			     font-size: 70%;
-			     vertical-align: top;
-			}
-			
-			.biblija_lay {
-			      visibility: hidden; 
-			      background:#FFFFFF;
-			      border:1px double #000000;
-			      color:#000000;
-			      font-size:90%;
-			      font-style:normal;
-			      font-variant:normal;
-			      font-weight:normal;
-			      letter-spacing:normal;
-			      line-height:normal;
-			      margin:0px;
-			      opacity:0.9;
-			      overflow:visible;
-			      padding:10px;
-			      text-align:left;
-			      text-indent:0pt;
-			      text-transform:none;
-			      vertical-align:baseline;
-			      position: absolute;
-			      visibility:hidden;
-			      width: <?php echo "$wp_bible_default_width"."px;"; ?>
-			      word-spacing:normal;
-			}
-		</style>
+			sup { font-size: 70%; vertical-align: top; }
+			.biblija_lay { visibility: hidden; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; visibility:hidden; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing:normal; }
+		</style><?php
+         	    echo "\n<!-- /WP-Bible plugin version $biblija_version -->\n\n";
 
-         <?php
 }
 
 $biblija_i = 0;
