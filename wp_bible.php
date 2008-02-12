@@ -25,6 +25,10 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+if (!defined('ABSPATH'))
+	die("Hello world!");
+
+
 load_plugin_textdomain("wp_bible", 'wp-content/plugins/wp-bible');
 
 require_once( ABSPATH . "wp-includes/class-snoopy.php");

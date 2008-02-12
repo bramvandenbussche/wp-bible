@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('ABSPATH'))
+	die("Hello world!");
+
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
 
 function matej_register2 ($what, $version){
