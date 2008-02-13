@@ -302,7 +302,7 @@ function biblija_head (){
     	   if (!$wp_bible_slim){
     
          ?>	<script type="text/javascript">         
-			var biblija_cnt = 0;
+			var biblija_cnt = 200;
 			function biblija_showhide (id){
 				var obj = document.getElementById(id);
 				if (obj.style.visibility == "visible")
