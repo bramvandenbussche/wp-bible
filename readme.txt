@@ -96,7 +96,7 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
-*   1.7.2: added option to make only a hyperlink to biblical text (instead of displaying the text itself in overlayed layer) 
+*   1.7.2: added option to make only a hyperlink to biblical text (instead of displaying the biblical text in a layer above the post/page) 
 *   1.7.1: fixed a bug that prevented linking references like John 5:6-6:3 
 *   1.7: added i18n of the admin interface (previously only in English), users invited to translate POT file for their locale and send it to me 
 *   1.6: added support for 38 different bible versions in 14 languages (previous versions supported only Slovenian).
