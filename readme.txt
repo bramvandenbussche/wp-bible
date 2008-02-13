@@ -4,13 +4,13 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donat
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
 == Description ==
 
-WP-Bible searches your posts and pages for any reference to a Bible passage and converts the reference to an actual biblical text - which can be any of the 38 translations (in 14 different languages) that you can see at [BIBLIJA.net](http://www.biblija.net/biblija.cgi?set=5&lang=en "BIBLIJA.net").
+WP-Bible searches your posts and pages for any reference to a Bible passage and converts the reference to an actual biblical text - which can be any of the 38 translations (in 14 different languages) that you can see at [BIBLIJA.net](http://www.biblija.net/biblija.cgi?set=5&lang=en "BIBLIJA.net"). Or, you can select that plugin only makes links to the biblical text.  
 
 No special tagging of biblical references is needed, the plugin recognizes different (up to 12) names for the same book in the Bible (for example: you can type Matthew 5:1-11 or Mat 5:1-11 or Mt 5:1-11 or you can even use other standards for marking biblical references like Mat 5,1-11.15-17;6,1-3. All this will do.
 Plugin then changes the reference for a link and when you click the link a small layer is shown above containing the biblical text. No opening other windows, no popups. 
@@ -96,6 +96,7 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
+*   1.7.2: added option to make only a hyperlink to biblical text (instead of displaying the text itself in overlayed layer) 
 *   1.7.1: fixed a bug that prevented linking references like John 5:6-6:3 
 *   1.7: added i18n of the admin interface (previously only in English), users invited to translate POT file for their locale and send it to me 
 *   1.6: added support for 38 different bible versions in 14 languages (previous versions supported only Slovenian).

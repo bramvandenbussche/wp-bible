@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP- Bible\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-12 14:40+0100\n"
-"PO-Revision-Date: 2008-02-12 14:45+0100\n"
+"POT-Creation-Date: 2008-02-13 05:26+0100\n"
+"PO-Revision-Date: 2008-02-13 05:26+0100\n"
 "Last-Translator: Matej Nastran <matej@nastran.net>\n"
 "Language-Team: Matej Nastran <matej@nastran.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,23 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: c:\\matej\\internet\\www\\matej\\blog\\wp_bible\n"
 
-#: wp_bible.php:223
+#: c:\matej\internet\www\matej\blog\wp_bible/wp_bible.php:239
 msgid "Settings updated!"
 msgstr ""
 
-#: wp_bible.php:227
+#: c:\matej\internet\www\matej\blog\wp_bible/wp_bible.php:243
 msgid "WP-Bible default bible version"
 msgstr ""
 
-#: wp_bible.php:240
+#: c:\matej\internet\www\matej\blog\wp_bible/wp_bible.php:256
 msgid "Bible text layer width (in pixels)"
 msgstr ""
 
-#: wp_bible.php:245
+#: c:\matej\internet\www\matej\blog\wp_bible/wp_bible.php:263
+msgid "Only make a link to bible text (and don't display it in overlayed layer)"
+msgstr ""
+
+#: c:\matej\internet\www\matej\blog\wp_bible/wp_bible.php:267
 msgid "Update Options"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WP-Bible\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-12 14:40+0100\n"
-"PO-Revision-Date: 2008-02-12 15:21+0100\n"
+"PO-Revision-Date: 2008-02-13 05:29+0100\n"
 "Last-Translator: Matej Nastran <matej@nastran.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,10 @@ msgstr "WP-Bible privzeto besedilo Svetega pisma"
 #: wp_bible.php:240
 msgid "Bible text layer width (in pixels)"
 msgstr "Širina prikaza svetopisemskega besedil (v pixlih)"
+
+#: wp_bible.php:263
+msgid "Only make a link to bible text (and don't display it in overlayed layer)"
+msgstr "Naredi samo povezavo na svetopisemski tekst (in ne izpiši samega teksta v okvirju nad tekstom prispevka)"
 
 #: wp_bible.php:245
 msgid "Update Options"
