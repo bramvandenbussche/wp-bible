@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donat
 Tags: Bible, Scripture, Christian, post, comments, formatting, ajax, biblija, sveto pismo
 Requires at least: 2.2
 Tested up to: 2.3.3
-Stable tag: 1.7.2
+Stable tag: 1.7.4
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
@@ -96,6 +96,7 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
+*   1.7.4: plugin no more relays on the presence of wp_head tag in the header of the theme and correctly displays formatting even if no wp_head is present   
 *   1.7.3: fixed a bug displaying only the first of two or more exactly same references that were used in the same post   
 *   1.7.2: added option to make only a hyperlink to biblical text (instead of displaying the biblical text in a layer above the post/page) and fixed a bug where the layer didn't get displayed above some of the elements of the page 
 *   1.7.1: fixed a bug that prevented linking references like John 5:6-6:3 

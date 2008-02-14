@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.3
+Version: 1.7.4
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,7 +25,8 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.3";
+$biblija_version = "1.7.4";
+$biblija_head_displayed = false;
 
 
 if (!defined('ABSPATH'))
@@ -33,6 +34,7 @@ if (!defined('ABSPATH'))
 
 
 load_plugin_textdomain("wp_bible", 'wp-content/plugins/wp-bible');
+$biblija_warn = "";
 
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register2"))
@@ -310,6 +312,9 @@ function bible_to_ord ($str){
 }
 
 function bible_head (){
+    global $biblija_head_displayed, $biblija_warn;
+    $biblija_head_displayed = true;
+    
     global $wp_bible_default_width, $biblija_version, $wp_bible_slim;
 
         echo "\n\n<!-- WP-Bible plugin version $biblija_version -->\n";
@@ -332,6 +337,7 @@ function bible_head (){
 		</style><?php
      }
 	    echo "\n<!-- /WP-Bible plugin version $biblija_version -->\n\n";
+  	    echo $biblija_warn;
 
 }
 
@@ -340,6 +346,13 @@ $biblija_i = 0;
 function bible_the_content($content) {
          global $biblija_i, $moje_knjige, $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy, $biblija_version, $plugin_url, $wp_bible_default_version, $bible_ver;
          global $wp_bible_slim;
+         global $biblija_head_displayed, $biblija_warn;
+
+         if ($biblija_head_displayed == false){
+            $biblija_warn = "<!-- \nWARNING: there is no wp_head template call for this page,\n you shouuld FIX it by including ".
+		  "wp_head() call in your template...\n-->\n\n";
+         	  bible_head ();
+         }
 
          $table_name = $wpdb->prefix . "wp_bible";
          foreach ($moje_knjige as $knjiga){
