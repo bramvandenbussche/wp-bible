@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.2
+Version: 1.7.3
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.2";
+$biblija_version = "1.7.3";
 
 
 if (!defined('ABSPATH'))
@@ -37,6 +37,20 @@ load_plugin_textdomain("wp_bible", 'wp-content/plugins/wp-bible');
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
 if (!function_exists("matej_register2"))
    include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
+   
+function bible_str_replace_once($search, $replace, $subject)
+{
+    if(($pos = strpos($subject, $search)) !== false)
+    {
+        $ret = substr($subject, 0, $pos).$replace.substr($subject, $pos + strlen($search));
+    }
+    else
+    {
+        $ret = $subject;
+    }
+   
+    return($ret);
+}   
 
 
 /* First, we need to make an instance of the class */
@@ -175,7 +189,7 @@ foreach ($biblija_knjige as $knjige)
         foreach ($knjige as $knjiga)
                 $moje_knjige[$i++] = $knjiga;
 
-function my_cmp($a, $b)
+function bible_my_cmp($a, $b)
 {
    if (strlen($a) == strlen($b)) {
        return 0;
@@ -184,15 +198,15 @@ function my_cmp($a, $b)
 }
 
 
-function version_cmp($a, $b)
+function bible_version_cmp($a, $b)
 {
    return strcmp($a, $b);
 }
 
 
 
-usort($moje_knjige, "my_cmp");
-uasort($bible_ver, "version_cmp");
+usort($moje_knjige, "bible_my_cmp");
+uasort($bible_ver, "bible_version_cmp");
 
 $wp_bible_default_width = get_option('wp_bible_default_width');
 if (((int)$wp_bible_default_width) == 0){
@@ -221,7 +235,7 @@ $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 
 
 // kaj in kje točno naj se izpiše v admin vmesniku 
-function biblija_admin_action()
+function bible_admin_action()
 {
    global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim;
 
@@ -275,19 +289,19 @@ function biblija_admin_action()
 }
 
 // inicializiraj admin vmesnik
-function biblija_add_plugin_to_admin_menu()   
+function bible_add_plugin_to_admin_menu()   
 {  
-   add_submenu_page('options-general.php', 'WP-Bible', 'WP-Bible', 10, __FILE__, 'biblija_admin_action');  
+   add_submenu_page('options-general.php', 'WP-Bible', 'WP-Bible', 10, __FILE__, 'bible_admin_action');  
 }  
 
-add_action('admin_menu', 'biblija_add_plugin_to_admin_menu');
-add_filter('the_content', 'biblija_the_content');
-add_action('wp_head', 'biblija_head');
+add_action('admin_menu', 'bible_add_plugin_to_admin_menu');
+add_filter('the_content', 'bible_the_content');
+add_action('wp_head', 'bible_head');
 
 matej_register2 ("wp_bible", $biblija_version);
 
 
-function to_ord ($str){
+function bible_to_ord ($str){
          $out = "";
          $j = strlen($str);
          for ($i=0; $i<$j;$i++)
@@ -295,7 +309,7 @@ function to_ord ($str){
          return $out;
 }
 
-function biblija_head (){
+function bible_head (){
     global $wp_bible_default_width, $biblija_version, $wp_bible_slim;
 
         echo "\n\n<!-- WP-Bible plugin version $biblija_version -->\n";
@@ -323,7 +337,7 @@ function biblija_head (){
 
 $biblija_i = 0;
 
-function biblija_the_content($content) {
+function bible_the_content($content) {
          global $biblija_i, $moje_knjige, $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy, $biblija_version, $plugin_url, $wp_bible_default_version, $bible_ver;
          global $wp_bible_slim;
 
@@ -332,7 +346,7 @@ function biblija_the_content($content) {
                $reg = "@$knjiga [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]@mi";
                if (preg_match_all($reg, $content, $matches, PREG_PATTERN_ORDER)){
                   foreach ($matches[0] as $curr_match){
-                          $match_encoded = to_ord($curr_match);
+                          $match_encoded = bible_to_ord($curr_match);
                           $biblija_i++;
                           $url1 = $biblija_url1.urlencode($curr_match);
                           $url2 = $biblija_url2.urlencode($curr_match);
@@ -360,9 +374,14 @@ function biblija_the_content($content) {
 	                               else
 	                                   $bible_text = "";
 	                          }    
-                          	 $content = is_feed() ?
-                                   str_replace ($curr_match, "<a class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content)
-                                   : str_replace ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
+	                          if (is_feed())
+						    $content = str_replace ($curr_match, "<a class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content);
+  				           else{
+       	                        while (strstr ($content, $curr_match)){
+                                  		$content = bible_str_replace_once ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
+                                  		$biblija_i++;
+                                  }
+                               }
 					 }
 					 else 
                           	 $content = str_replace ($curr_match, "<a class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content);
