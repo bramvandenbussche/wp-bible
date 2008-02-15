@@ -37,5 +37,5 @@ msgstr "Posodobi nastavitve"
 
 #: wp_bible.php:63
 msgid "Display bible text inline instead of in a layer above the post."
-msgstr "Izpiši svetopisemsko besedilo v samem besedilu prispevku namesto v ravnini nad njim."
+msgstr "Izpiši svetopisemsko besedilo v samem besedilu prispevka namesto v ravnini nad njim."
 
