@@ -1,4 +1,4 @@
-# Slovenian (sl) translation for WordPress.
+# Slovenian (sl_SI) translation for WordPress.
 # Copyright (C) 2008 Matej Nastran
 # This file is distributed under the same license as the WordPress package.
 # Matej Nastran <matej@nastran.net>, 2008.
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WP-Bible\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-12 14:40+0100\n"
-"PO-Revision-Date: 2008-02-12 15:21+0100\n"
+"PO-Revision-Date: 2008-02-15 22:08+0100\n"
 "Last-Translator: Matej Nastran <matej@nastran.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,15 @@ msgstr "WP-Bible privzeto besedilo Svetega pisma"
 msgid "Bible text layer width (in pixels)"
 msgstr "Širina prikaza svetopisemskega besedil (v pixlih)"
 
+#: wp_bible.php:263
+msgid "Only make a link to bible text (and don't display it in overlayed layer)"
+msgstr "Naredi samo povezavo na svetopisemski tekst (in ne izpiši samega teksta v okvirju nad tekstom prispevka)"
+
 #: wp_bible.php:245
 msgid "Update Options"
 msgstr "Posodobi nastavitve"
+
+#: wp_bible.php:63
+msgid "Display bible text inline instead of in a layer above the post."
+msgstr "Izpiši svetopisemsko besedilo v samem besedilu prispevku namesto v ravnini nad njim."
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: WP-Bible\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-12 14:40+0100\n"
-"PO-Revision-Date: 2008-02-13 05:29+0100\n"
+"PO-Revision-Date: 2008-02-15 22:08+0100\n"
 "Last-Translator: Matej Nastran <matej@nastran.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,4 +34,8 @@ msgstr "Naredi samo povezavo na svetopisemski tekst (in ne izpiši samega teksta
 #: wp_bible.php:245
 msgid "Update Options"
 msgstr "Posodobi nastavitve"
+
+#: wp_bible.php:63
+msgid "Display bible text inline instead of in a layer above the post."
+msgstr "Izpiši svetopisemsko besedilo v samem besedilu prispevku namesto v ravnini nad njim."
 

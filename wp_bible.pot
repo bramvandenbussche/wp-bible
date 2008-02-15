@@ -36,3 +36,5 @@ msgstr ""
 msgid "Update Options"
 msgstr ""
 
+msgid "Display bible text inline instead of in a layer above the post."
+msgstr ""

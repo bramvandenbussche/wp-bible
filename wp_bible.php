@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.4
+Version: 1.7.5
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.4";
+$biblija_version = "1.7.5";
 $biblija_head_displayed = false;
 
 
@@ -222,6 +222,13 @@ if ($wp_bible_slim == ''){
    update_option('wp_bible_slim', $wp_bible_slim);
 }
 
+$wp_bible_inline = get_option('wp_bible_inline');
+if ($wp_bible_inline == ''){
+   $wp_bible_inline = 0;
+   update_option('wp_bible_inline', $wp_bible_inline);
+}
+
+
 $wp_bible_default_version = get_option('wp_bible_default_version');
 if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version]))){
    $wp_bible_default_version = 15;
@@ -239,7 +246,7 @@ $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 // kaj in kje točno naj se izpiše v admin vmesniku 
 function bible_admin_action()
 {
-   global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim;
+   global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim, $wp_bible_inline;
 
     if (isset($_POST['biblija_update'])) {
     	  if ((int)$_POST['biblija_width'])
@@ -247,6 +254,8 @@ function bible_admin_action()
         update_option('wp_bible_default_width', $wp_bible_default_width);
         $wp_bible_slim = (int)$_POST['biblija_slim'];
         update_option('wp_bible_slim', $wp_bible_slim);
+        $wp_bible_inline = (int)$_POST['biblija_inline'];
+        update_option('wp_bible_inline', $wp_bible_inline);
         if ((int)$_POST['wp_bible_default_version'])
         	 $wp_bible_default_version = $_POST['wp_bible_default_version'];
         update_option('wp_bible_default_version', $wp_bible_default_version);
@@ -277,6 +286,12 @@ function bible_admin_action()
 			<label for="biblija_slim">
 				  <input type="checkbox" <?php echo $wp_bible_slim ? "checked" : ""; ?> name="biblija_slim" value="1" />
 				  &nbsp;<?php _e("Only make a link to bible text (and don't display it in overlayed layer)", "wp_bible"); ?>
+			</label>
+			<br />
+			<br />
+			<label for="biblija_inline">
+				  <input type="checkbox" <?php echo $wp_bible_inline ? "checked" : ""; ?> name="biblija_inline" value="1" />
+				  &nbsp;<?php _e("Display bible text inline instead of in a layer above the post.", "wp_bible"); ?>
 			</label>
         		<br />
     <p class="submit">
@@ -334,6 +349,7 @@ function bible_head (){
 		<style type="text/css" id="wp-bible">
 			sup { font-size: 70%; vertical-align: top; }
 			.biblija_lay { visibility: hidden; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; visibility:hidden; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing:normal; }
+			.biblija_lay_inline { background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; ?> word-spacing:normal; }
 		</style><?php
      }
 	    echo "\n<!-- /WP-Bible plugin version $biblija_version -->\n\n";
@@ -345,7 +361,7 @@ $biblija_i = 0;
 
 function bible_the_content($content) {
          global $biblija_i, $moje_knjige, $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy, $biblija_version, $plugin_url, $wp_bible_default_version, $bible_ver;
-         global $wp_bible_slim;
+         global $wp_bible_slim, $wp_bible_inline;
          global $biblija_head_displayed, $biblija_warn;
 
          if ($biblija_head_displayed == false){
@@ -390,8 +406,9 @@ function bible_the_content($content) {
 	                          if (is_feed())
 						    $content = str_replace ($curr_match, "<a class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content);
   				           else{
+        	                        $div = $wp_bible_inline ? "div" : "span";
        	                        while (strstr ($content, $curr_match)){
-                                  		$content = bible_str_replace_once ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><span class=\"biblija_lay\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<span style=\"float:right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></span>", $content);
+                                  		$content = bible_str_replace_once ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><$div class=\"biblija_lay".($wp_bible_inline ? "_inline" : "")."\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<div style=\"text-align: right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></div></$div>", $content);
                                   		$biblija_i++;
                                   }
                                }
