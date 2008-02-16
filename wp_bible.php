@@ -328,9 +328,12 @@ function bible_to_ord ($str){
 
 function bible_head (){
     global $biblija_head_displayed, $biblija_warn;
+    global $wp_bible_default_width, $biblija_version, $wp_bible_slim;
+
+    if ($biblija_head_displayed)
+       return;
     $biblija_head_displayed = true;
     
-    global $wp_bible_default_width, $biblija_version, $wp_bible_slim;
 
         echo "\n\n<!-- WP-Bible plugin version $biblija_version -->\n";
     	   if (!$wp_bible_slim){
