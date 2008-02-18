@@ -400,7 +400,8 @@ function bible_the_content($content) {
 	                                   $bible_text = preg_replace ("@<!--.*?-->@m", "", $bible_text);
 	                                   $bible_text = preg_replace ("@<.*?".">@m", "", $bible_text);
 	                                   $bible_text = trim($bible_text);
-	                                   $bible_text = iconv("CP1250", "UTF-8", $bible_text);
+	                                   if (function_exists ('iconv'))
+	                                   	  $bible_text = iconv("CP1250", "UTF-8", $bible_text);
 	                                   $bible_text = preg_replace ("@([^#0-9])([0-9]+)@m", "\\1<sup>\\2</sup>", $bible_text);
 	                                   if (strlen($bible_text))
 	                                       $wpdb->query("INSERT INTO $table_name VALUES (0, '".$wpdb->escape($curr_match). "','" . $wpdb->escape($bible_text) . "')");
