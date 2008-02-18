@@ -96,6 +96,7 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
+*   1.7.6: fixed a bug regarding a RSS feed validation.   
 *   1.7.5: added the possibility to display bible text inline instead of in a layer above the post.   
 *   1.7.4: plugin no more relies on the presence of wp_head tag in the header of the theme and correctly displays formatting even if no wp_head is present   
 *   1.7.3: fixed a bug displaying only the first of two or more exactly same references that were used in the same post   
