@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.6
+Version: 1.7.7
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.6";
+$biblija_version = "1.7.7";
 $biblija_head_displayed = false;
 
 
@@ -250,14 +250,14 @@ function bible_admin_action()
 
     if (isset($_POST['biblija_update'])) {
     	  if ((int)$_POST['biblija_width'])
-    	  	$wp_bible_default_width = $_POST['biblija_width'];
+    	  	$wp_bible_default_width = (int)$_POST['biblija_width'];
         update_option('wp_bible_default_width', $wp_bible_default_width);
         $wp_bible_slim = (int)$_POST['biblija_slim'];
         update_option('wp_bible_slim', $wp_bible_slim);
         $wp_bible_inline = (int)$_POST['biblija_inline'];
         update_option('wp_bible_inline', $wp_bible_inline);
         if ((int)$_POST['wp_bible_default_version'])
-        	 $wp_bible_default_version = $_POST['wp_bible_default_version'];
+        	 $wp_bible_default_version = (int)$_POST['wp_bible_default_version'];
         update_option('wp_bible_default_version', $wp_bible_default_version);
 	   $table_name = $wpdb->prefix . "wp_bible";
 	   $wpdb->query ("TRUNCATE TABLE $table_name;");
