@@ -3,12 +3,12 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.9
+Version: 1.7.10
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
 
-/*  
+/*  Copyright 2008  Matej Nastran (email : matej@nastran.net)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.9";
+$biblija_version = "1.7.10";
 $biblija_head_displayed = false;
 
 
@@ -228,6 +228,13 @@ if ($wp_bible_inline == ''){
    update_option('wp_bible_inline', $wp_bible_inline);
 }
 
+$wp_bible_new_window = get_option('wp_bible_new_window');
+if ($wp_bible_new_window == ''){
+   $wp_bible_new_window = 0;
+   update_option('wp_bible_new_window', $wp_bible_new_window);
+}
+
+
 
 $wp_bible_default_version = get_option('wp_bible_default_version');
 if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version]))){
@@ -236,7 +243,7 @@ if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_defau
 }
 
 
-$biblija_url1 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&m=";
+$biblija_url1 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&amp;pos=0&amp;set=5&amp;m=";
 $biblija_url2 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&l=sl&t=3&m=";
 $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 
@@ -246,7 +253,7 @@ $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 // kaj in kje točno naj se izpiše v admin vmesniku 
 function bible_admin_action()
 {
-   global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim, $wp_bible_inline;
+   global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim, $wp_bible_inline, $wp_bible_new_window;
 
     if (isset($_POST['biblija_update'])) {
     	  if ((int)$_POST['biblija_width'])
@@ -256,6 +263,8 @@ function bible_admin_action()
         update_option('wp_bible_slim', $wp_bible_slim);
         $wp_bible_inline = (int)$_POST['biblija_inline'];
         update_option('wp_bible_inline', $wp_bible_inline);
+        $wp_bible_new_window = (int)$_POST['biblija_new_window'];
+        update_option('wp_bible_new_window', $wp_bible_new_window);
         if ((int)$_POST['wp_bible_default_version'])
         	 $wp_bible_default_version = (int)$_POST['wp_bible_default_version'];
         update_option('wp_bible_default_version', $wp_bible_default_version);
@@ -288,6 +297,10 @@ function bible_admin_action()
 				  &nbsp;<?php _e("Only make a link to bible text (and don't display it in overlayed layer)", "wp_bible"); ?>
 			</label>
 			<br />
+			<label for="biblija_new_window">
+				  <input type="checkbox" <?php echo $wp_bible_new_window ? "checked" : ""; ?> name="biblija_new_window" value="1" />
+				  &nbsp;<?php _e("Open link in new window.", "wp_bible"); ?>
+			</label>
 			<br />
 			<label for="biblija_inline">
 				  <input type="checkbox" <?php echo $wp_bible_inline ? "checked" : ""; ?> name="biblija_inline" value="1" />
@@ -343,16 +356,16 @@ function bible_head (){
 			var biblija_cnt = 200;
 			function biblija_showhide (id){
 				var obj = document.getElementById(id);
-				if (obj.style.visibility == "visible")
-			  		obj.style.visibility = "hidden";
+				if (obj.style.display == "inline")
+			  		obj.style.display = "none";
 				else
-			  	obj.style.visibility = "visible";
+			  	obj.style.display = "inline";
 			   obj.style.zIndex = biblija_cnt++;
 			}
 		</script>
 		<style type="text/css" id="wp-bible">
 			sup { font-size: 70%; vertical-align: top; }
-			.biblija_lay { visibility: hidden; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; visibility:hidden; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing:normal; }
+			.biblija_lay { display: none; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing:normal; }
 			.biblija_lay_inline { background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; ?> word-spacing:normal; }
 		</style><?php
      }
@@ -366,7 +379,7 @@ $biblija_i = 0;
 
 function bible_the_content($content) {
          global $biblija_i, $moje_knjige, $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy, $biblija_version, $plugin_url, $wp_bible_default_version, $bible_ver;
-         global $wp_bible_slim, $wp_bible_inline;
+         global $wp_bible_slim, $wp_bible_inline, $wp_bible_new_window;
          global $biblija_head_displayed, $biblija_warn;
 
          if ($biblija_head_displayed == false){
@@ -377,16 +390,17 @@ function bible_the_content($content) {
 
          $table_name = $wpdb->prefix . "wp_bible";
          foreach ($moje_knjige as $knjiga){
-               $reg = "@$knjiga [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]@mi";
+               $reg = "@$knjiga\.? [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]@mi";
                if (preg_match_all($reg, $content, $matches, PREG_PATTERN_ORDER)){
                   foreach ($matches[0] as $curr_match){
                           $match_encoded = bible_to_ord($curr_match);
                           $biblija_i++;
-                          $url1 = $biblija_url1.urlencode($curr_match);
-                          $url2 = $biblija_url2.urlencode($curr_match);
+			  $url_match = preg_replace("/($knjiga)\.?(.*)/mi", "$1$2", $curr_match);
+                          $url1 = $biblija_url1.urlencode($url_match);
+                          $url2 = $biblija_url2.urlencode($url_match);
                           
 					 if (!$wp_bible_slim){
-					     $bible_res = $wpdb->get_col("SELECT text FROM $table_name WHERE ref LIKE '".$wpdb->escape($curr_match)."';");
+					     $bible_res = $wpdb->get_col("SELECT text FROM $table_name WHERE ref LIKE '".$wpdb->escape($url_match)."';");
                               $bible_text = $bible_res[0];
 	                          if (!strlen($bible_text)){
 	                               $biblija_result = $biblija_snoopy->fetch($url2);
@@ -404,7 +418,7 @@ function bible_the_content($content) {
 	                                   	  $bible_text = iconv("CP1250", "UTF-8", $bible_text);
 	                                   $bible_text = preg_replace ("@([^#0-9])([0-9]+)@m", "\\1<sup>\\2</sup>", $bible_text);
 	                                   if (strlen($bible_text))
-	                                       $wpdb->query("INSERT INTO $table_name VALUES (0, '".$wpdb->escape($curr_match). "','" . $wpdb->escape($bible_text) . "')");
+	                                       $wpdb->query("INSERT INTO $table_name VALUES (0, '".$wpdb->escape($url_match). "','" . $wpdb->escape($bible_text) . "')");
 	                               }
 	                               else
 	                                   $bible_text = "";
@@ -414,13 +428,18 @@ function bible_the_content($content) {
   				           else{
         	                        $div = $wp_bible_inline ? "div" : "span";
        	                        while (strstr ($content, $curr_match)){
-                                  		$content = bible_str_replace_once ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><$div class=\"biblija_lay".($wp_bible_inline ? "_inline" : "")."\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<div style=\"text-align: right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></div></$div>", $content);
+                                  		$content = bible_str_replace_once ($curr_match, "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a><$div class=\"biblija_lay".($wp_bible_inline ? "_inline" : "")."\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\"><b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b><br />$bible_text<br /><br /><span style=\"text-align: right\"><a href=\"$plugin_url\" title=\"WP-Bible plugin version $biblija_version\">WP-Bible plugin</a></span></$div>", $content);
                                   		$biblija_i++;
                                   }
                                }
 					 }
-					 else 
-                          	 $content = str_replace ($curr_match, "<a class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content);
+					 else {
+							if ($wp_bible_new_window)
+								$target = "target=\"_blank\"";
+							else
+								$target = "";
+                          	 $content = str_replace ($curr_match, "<a $target class=\"biblija_link\" href=\"$url1\">$match_encoded</a>", $content);
+						}
                   }
                }
          }

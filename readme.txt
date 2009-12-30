@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donat
 Tags: Bible, biblia, bijbel, Scripture, Christian, post, comments, formatting, biblija, sveto pismo 
 Requires at least: 2.2
 Tested up to: 2.9
-Stable tag: 1.7.9
+Stable tag: 1.7.10
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
@@ -96,6 +96,9 @@ You can choose the bible text from any of the following versions:
  
 == Changelog ==
 
+*   1.7.10: fixed some CSS issues in IE7, IE8 and webkit browsers (Safari & Chrome) - look at http://wordpress.org/support/topic/248735?replies=5
+			added option to open link in new window
+			extended the syntax of bible reference to include a dot following the book name, for example: 1 Cor. 13,1-12
 *   1.7.9: tested for Wordpress 2.9
 *   1.7.8: added support for Wordpress 2.5 & 2.7
 *   1.7.7: fixed a potentially vulnerable POST request processing.   
