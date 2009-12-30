@@ -3,12 +3,12 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.7
+Version: 1.7.9
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
 
-/*  Copyright 2008  Matej Nastran (email : matej@nastran.net)
+/*  
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.7";
+$biblija_version = "1.7.9";
 $biblija_head_displayed = false;
 
 
