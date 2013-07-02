@@ -3,7 +3,7 @@
 Plugin Name: WP-Bible
 Plugin URI: http://wordpress.org/extend/plugins/wp-bible/
 Description: Plugin finds Bible references in your posts and changes them for the actual text from the Bible. You can choose any of 38 different translations in 14 languages that are available at <a href="http://www.biblija.net">BIBLIJA.net</a>.
-Version: 1.7.11
+Version: 1.8
 Author: Matej Nastran
 Author URI: http://matej.nastran.net/
 */
@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.11";
+$biblija_version = "1.8";
 $biblija_head_displayed = false;
 
 
@@ -95,6 +95,19 @@ $bible_ver[39] = "Latin: Vulgata Clementina (1592) - VLC";
 $bible_ver[40] = "Dutch: De Nieuwe Bijbelvertaling (2004/2007) - PDA - NBV-PDA";
 $bible_ver[41] = "Croatian: Hrvatska Biblija (KS) - HKS";
 $bible_ver[43] = "Dutch: De Nieuwe Bijbelvertaling Tanacheditie (2006) - NBV-T";
+$bible_ver[44] = "Statenvertaling 1637, SV1637";
+$bible_ver[47] = "Deux-Aesbijbel (1562), DA1562";
+$bible_ver[48] = "Herziene Statenvertaling (2010), HSV";
+$bible_ver[49] = "Friese Bijbel 1943 (Wumkes-Folkertsma), FB43";
+$bible_ver[50] = "Nije Fryske Bibeloersetting (1978), NFB";
+$bible_ver[51] = "Biebel (in t Grunnegers) (2008), GRB";
+$bible_ver[52] = "Biestkensbijbel (1560), BIE1560";
+$bible_ver[53] = "Liesveltbijbel (1542), LIE1542";
+$bible_ver[56] = "Lutherse vertaling (1648), LUT1648";
+$bible_ver[57] = "Leuvense bijbel (1548), LEU1548";
+$bible_ver[58] = "Vorstermanbijbel (1528/1531), VOR1531";
+$bible_ver[59] = "Delftse bijbel (1477), DEL1477";
+$bible_ver[61] = "Lithuanian, LIT";
 
 
 $biblija_knjige[] = array ("1 Mz", "1 Mojz", "Gen", "Gn", "Ge", "Post", "Has", "Geneza", "1 Mojzes", "Genesis", "1 Mose", "Génesis", "Beresjiet");
@@ -138,14 +151,14 @@ $biblija_knjige[] = array ("Zah", "Zec", "Zech", "Zch", "Za", "Zac", "Zach", "Sa
 $biblija_knjige[] = array ("Mal", "Ml", "Malahija", "Malachi", "Maleachi", "Malaquías");
 $biblija_knjige[] = array ("Mt", "Mat", "Matt", "Matej", "Matevž", "Matthew", "Matteüs", "Matteus", "Matthäus", "Mateo");
 $biblija_knjige[] = array ("Mr", "Mar", "Mrk", "Mk", "Mc", "Marko", "Mark", "Marcus", "Markus", "Marc", "Marcos");
-$biblija_knjige[] = array ("Lk", "Luk", "Lc", "Luc", "Lu", "L", "Luka", "Lukež", "Luke", "Lucas", "Lukas", "Lucas");
-$biblija_knjige[] = array ("Jn", "Jan", "Jhn", "Joh", "Jo", "J", "Io", "Iv", "Janez", "John", "Johannes", "Jean", "Juan");
+$biblija_knjige[] = array ("Lk", "Luk", "Lc", "Luc", "Lu", "Luka", "Lukež", "Luke", "Lucas", "Lukas", "Lucas");
+$biblija_knjige[] = array ("Jn", "Jan", "Jhn", "Joh", "Jo", "Io", "Iv", "Janez", "John", "Johannes", "Jean", "Juan");
 $biblija_knjige[] = array ("Apd", "Dej", "DejAp", "Act", "Ac", "Hand", "Hnd", "Apg", "Dj", "Hch", "Eg", "Acts", "Dela", "Dejanja", "Handelingen", "Apostelgeschichte", "Hechos");
-$biblija_knjige[] = array ("Rim", "Rimlj", "Rom", "Röm", "Ro", "Rm", "R", "Erm", "Rimljanom", "Romans", "Romeinen", "Römer", "Romanos");
+$biblija_knjige[] = array ("Rim", "Rimlj", "Rom", "Röm", "Ro", "Rm", "Erm", "Rimljanom", "Romans", "Romeinen", "Römer", "Romanos");
 $biblija_knjige[] = array ("1 Kor", "1 Cor", "1 Co", "1 Ko", "1 K", "1 Korinčanom", "1 Corinthians", "1 Korintiërs", "1 Korintiers", "1 Korinthe", "1 Korinther", "1 Corintios");
 $biblija_knjige[] = array ("2 Kor", "2 Cor", "2 Co", "2 Ko", "2 K", "2 Korinčanom", "2 Corinthians", "2 Korintiërs", "2 Korintiers", "2 Korinthe", "2 Korinther", "2 Corintios");
-$biblija_knjige[] = array ("Gal", "Ga", "Gl", "Galat", "G", "Galačanom", "Galatians", "Galaten", "Galater", "Gálatas");
-$biblija_knjige[] = array ("Ef", "Efež", "Éfez", "Efez", "Eph", "Éph", "Ep", "E", "Efežanom", "Ephesians", "Efeziërs", "Efeziers", "Efeze", "Epheser", "Efesios");
+$biblija_knjige[] = array ("Gal", "Ga", "Gl", "Galat", "Galačanom", "Galatians", "Galaten", "Galater", "Gálatas");
+$biblija_knjige[] = array ("Ef", "Efež", "Éfez", "Efez", "Eph", "Éph", "Ep", "Efežanom", "Ephesians", "Efeziërs", "Efeziers", "Efeze", "Epheser", "Efesios");
 $biblija_knjige[] = array ("Flp", "Filip", "Filipp", "Fil", "Fl", "Php", "Ph", "Phil", "Phili", "Filipljanom", "Philippians", "Filippenzen", "Philipper", "Filipenses");
 $biblija_knjige[] = array ("Kol", "Col", "Kološanom", "Colossians", "Kolossenzen", "Kolosser", "Colosenses");
 $biblija_knjige[] = array ("1 Tes", "1 Sol", "1 Th", "1 Ts", "1 Te", "1 Tess", "1 Thes", "1 Thess", "1 Tesaloničanom", "1 Thessalonians", "1 Tessalonicenzen", "1 Thessalonicher", "1 Tesalonicenses");
@@ -154,7 +167,7 @@ $biblija_knjige[] = array ("1 Tim", "1 Ti", "1 Tm", "1 T", "1 Timoteju", "1 Timo
 $biblija_knjige[] = array ("2 Tim", "2 Ti", "2 Tm", "2 T", "2 Timoteju", "2 Timothy", "2 Timoteüs", "2 Timoteus", "2 Timotheus", "2 Timoteo");
 $biblija_knjige[] = array ("Tit", "Tt", "Titus", "Titu", "Tite", "Tito");
 $biblija_knjige[] = array ("Flm", "Filem", "Film", "Phm", "Phlm", "Phile", "Philem", "Filemonu", "Philemon", "Filemon", "Filemón");
-$biblija_knjige[] = array ("Heb", "Hebr", "Hébr", "Hbr", "Hb", "He", "Hé", "H", "Hebrejcem", "Hebrews", "Hebreeërs", "Hebreeers", "Hebreeën", "Hebreeen", "Hebräer", "Hebreos");
+$biblija_knjige[] = array ("Heb", "Hebr", "Hébr", "Hbr", "Hb", "He", "Hé", "Hebrejcem", "Hebrews", "Hebreeërs", "Hebreeers", "Hebreeën", "Hebreeen", "Hebräer", "Hebreos");
 $biblija_knjige[] = array ("Jak", "Jas", "Jam", "Jm", "Ja", "Jc", "Jac", "Jacq", "Iac", "Stg", "St", "Jakob", "James", "Jakobus", "Santiago");
 $biblija_knjige[] = array ("1 Pt", "1 Pet", "1 Petr", "1 Pe", "1 Pi", "1 P", "1 Peter", "1 Petrus", "1 Pedro");
 $biblija_knjige[] = array ("2 Pt", "2 Pet", "2 Petr", "2 Pe", "2 Pi", "2 P", "2 Peter", "2 Petrus", "2 Pedro");
@@ -170,7 +183,7 @@ $biblija_knjige[] = array ("1 Mkb", "1 Mak", "1 Makk", "1 Mc", "1 Mac", "1 Macc"
 $biblija_knjige[] = array ("2 Mkb", "2 Mak", "2 Makk", "2 Mc", "2 Mac", "2 Macc", "2 Mcc", "2 Ma", "2 M", "2 Makabejci", "2 Maccabees", "2 Makkabeeën", "2 Makkabeeen", "2 Makkabeeërs", "2 Makkabeeers", "2 Makkabäer", "2 Macabeos");
 $biblija_knjige[] = array ("3 Mkb", "3 Mak", "3 Makk", "3 Mc", "3 Mac", "3 Macc", "3 Mcc", "3 Ma", "3 M", "3 Makabejci", "3 Maccabees", "3 Makkabeeën", "3 Makkabeeen", "3 Makkabeeërs", "3 Makkabeeers", "3 Makkabäer", "3 Macabeos");
 $biblija_knjige[] = array ("4 Mkb", "4 Mak", "4 Makk", "4 Mc", "4 Mac", "4 Macc", "4 Mcc", "4 Ma", "4 M", "4 Makabejci", "4 Maccabees", "4 Makkabeeën", "4 Makkabeeen", "4 Makkabeeërs", "4 Makkabeeers", "4 Makkabäer", "4 Macabeos");
-$biblija_knjige[] = array ("Mdr", "Modr", "Wis", "Wisd", "Weish", "Wijsh", "W", "Sg", "Sag", "Sap", "Sb", "Sab", "Sv", "Mudr", "Jkd", "Modrost", "Wisdom", "Wijsheid", "Weisheit", "Sabiduría");
+$biblija_knjige[] = array ("Mdr", "Modr", "Wis", "Wisd", "Weish", "Wijsh", "Sg", "Sag", "Sap", "Sb", "Sab", "Sv", "Mudr", "Jkd", "Modrost", "Wisdom", "Wijsheid", "Weisheit", "Sabiduría");
 $biblija_knjige[] = array ("Sir", "Si", "Sirah", "Sirach", "Eclo", "Ecclesiasticus", "Ecclesiastique", "Ecclésiastique", "Eclesiástico");
 $biblija_knjige[] = array ("Bar", "Ba", "Baruh", "Baruch", "Baruc");
 $biblija_knjige[] = array ("JerP", "LJe", "LJer", "LtJr", "LetJer", "LettreJer", "EpJer", "EpJr", "EpistJer", "BrJer", "CtJ", "JrGt", "JeremijevoP", "JeremijevoPismo", "BriefJeremias", "BrfJer");
@@ -386,7 +399,7 @@ function bible_the_content($content) {
 
          $table_name = $wpdb->prefix . "wp_bible";
          foreach ($moje_knjige as $knjiga){
-               $reg = "@$knjiga\.? [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]@mi";
+               $reg = "@$knjiga\.? [0-9]+[:,][ ]{0,1}[0-9]*[ \-0-9;,\.:]*[0-9]+@miu";
                if (preg_match_all($reg, $content, $matches, PREG_PATTERN_ORDER)){
                   foreach ($matches[0] as $curr_match){
                           $match_encoded = bible_to_ord($curr_match);

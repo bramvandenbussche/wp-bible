@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donat
 Tags: Bible, biblia, bijbel, Scripture, Christian, post, comments, formatting, biblija, sveto pismo 
 Requires at least: 2.2
 Tested up to: 3.5.2
-Stable tag: 1.7.11
+Stable tag: 1.8
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
@@ -90,8 +90,23 @@ You can choose the bible text from any of the following versions:
 1. Spanish: Biblia Dios Habla Hoy - DHH
 1. Spanish: Biblia Reina Valera - revisión de 1995 - RVR95E
 1. Spanish: Biblia Reina Valera - revisión de 1995 (Texto) - RVR95
+1. Statenvertaling 1637, SV1637
+1. Deux-Aesbijbel (1562), DA1562
+1. Herziene Statenvertaling (2010), HSV
+1. Friese Bijbel 1943 (Wumkes-Folkertsma), FB43
+1. Nije Fryske Bibeloersetting (1978), NFB
+1. Biebel (in t Grunnegers) (2008), GRB
+1. Biestkensbijbel (1560), BIE1560
+1. Liesveltbijbel (1542), LIE1542
+1. Lutherse vertaling (1648), LUT1648
+1. Leuvense bijbel (1548), LEU1548
+1. Vorstermanbijbel (1528/1531), VOR1531
+1. Delftse bijbel (1477), DEL1477
+1. Lithuanian, LIT
+
  
 == Changelog ==
+*	1.8: added 13 new bible translations (read FAQ) and fixed some bible verses detection problems
 *	1.7.11: tested for 3.5.2
 *   1.7.10: fixed some CSS issues in IE7, IE8 and webkit browsers (Safari & Chrome) - look at http://wordpress.org/support/topic/248735?replies=5
 			added option to open link in new window
