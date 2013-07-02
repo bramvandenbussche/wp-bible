@@ -25,7 +25,7 @@ Author URI: http://matej.nastran.net/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-$biblija_version = "1.7.10";
+$biblija_version = "1.7.11";
 $biblija_head_displayed = false;
 
 
@@ -37,8 +37,6 @@ load_plugin_textdomain("wp_bible", 'wp-content/plugins/wp-bible');
 $biblija_warn = "";
 
 require_once( ABSPATH . "wp-includes/class-snoopy.php");
-if (!function_exists("matej_register2"))
-   include (ABSPATH . "wp-content/plugins/wp-bible/matej_register_en.php");
    
 function bible_str_replace_once($search, $replace, $subject)
 {
@@ -327,8 +325,6 @@ function bible_add_plugin_to_admin_menu()
 add_action('admin_menu', 'bible_add_plugin_to_admin_menu');
 add_filter('the_content', 'bible_the_content');
 add_action('wp_head', 'bible_head');
-
-matej_register2 ("wp_bible", $biblija_version);
 
 
 function bible_to_ord ($str){

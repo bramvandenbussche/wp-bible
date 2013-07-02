@@ -3,8 +3,8 @@ Contributors: matejn
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=donate%40nastran%2enet&item_name=WP%2dBible%20plugin&page_style=Primary&no_shipping=1&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: Bible, biblia, bijbel, Scripture, Christian, post, comments, formatting, biblija, sveto pismo 
 Requires at least: 2.2
-Tested up to: 2.9
-Stable tag: 1.7.10
+Tested up to: 3.5.2
+Stable tag: 1.7.11
 
 Plugin finds Bible references in your posts and changes them for the actual Bible text from any of 38 different translations in 14 languages.
 
@@ -47,9 +47,6 @@ Please let me know if you'd like to add other book names that the plugin doesn't
 3. This is the Administration interface
 
 == Frequently Asked Questions ==
-
-= Contact information =
-You can find my blog and contact me at [http://matej.nastran.net/](http://matej.nastran.net/ "visit my blog!")
 
 = Which Bible translations are included? =
 
@@ -95,7 +92,7 @@ You can choose the bible text from any of the following versions:
 1. Spanish: Biblia Reina Valera - revisión de 1995 (Texto) - RVR95
  
 == Changelog ==
-
+*	1.7.11: tested for 3.5.2
 *   1.7.10: fixed some CSS issues in IE7, IE8 and webkit browsers (Safari & Chrome) - look at http://wordpress.org/support/topic/248735?replies=5
 			added option to open link in new window
 			extended the syntax of bible reference to include a dot following the book name, for example: 1 Cor. 13,1-12
