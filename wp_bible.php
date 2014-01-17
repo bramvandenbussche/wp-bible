@@ -415,6 +415,7 @@ function bible_the_content($content) {
 }
 
 
+//
 function find_passage_references($content) {
     global $biblija_i, $my_book, $biblija_version, $plugin_url, $wp_bible_default_version, $bible_ver;
     global $wp_bible_slim, $wp_bible_inline, $wp_bible_new_window;
@@ -430,41 +431,7 @@ function find_passage_references($content) {
 
             // For each match found, find the passage data
             foreach ($matches[0] as $curr_match){
-                $match_encoded = bible_to_ord($curr_match);
-                $biblija_i++;
-                $passage_reference = preg_replace("/($book)\.?(.*)/mi", "$1$2", $curr_match);
-
-                if (!$wp_bible_slim){
-                    $bible_text = get_bible_passage($passage_reference);
-
-                    if (is_feed()) {
-                        // When used inside a feed, just add a link to biblija.net for the current reference
-                        $content = str_replace ($curr_match, "<a class='biblija_link' href='$url1'>$match_encoded</a>", $content);
-                    } else {
-                        while (strstr ($content, $curr_match)){
-                            /*$content = bible_str_replace_once (
-                                            $curr_match,
-                                            "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">$match_encoded</a>
-											<$div class=\"biblija_lay".($wp_bible_inline ? "_inline" : "")."\" onclick=\"biblija_showhide('biblija_l$biblija_i');\" id=\"biblija_l$biblija_i\">
-												<b><a title=\"".$bible_ver[$wp_bible_default_version]."\" href=\"$url1\">$match_encoded<br />".$bible_ver[$wp_bible_default_version]."</a></b>
-												<br />
-												$bible_text
-											</$div>",
-                                            $content
-                                        );
-                            */
-                            $content = render_bible_passage_html($content, $curr_match, $match_encoded, $bible_text);
-                            $biblija_i++;
-                        }
-                    }
-                } else {
-                    if ($wp_bible_new_window) {
-                        $target = "target=\"_blank\"";
-                    } else {
-                        $target = "";
-                    }
-                    $content = str_replace ($curr_match, "<a $target class='biblija_link' href='$url1'>$match_encoded</a>", $content);
-                }
+				$content = render_bible_passage_html($content, $curr_match);
             }
         }
     }
@@ -526,20 +493,46 @@ function get_bible_passage($passage_reference) {
 }
 
 
-function render_bible_passage_html($content, $match, $reference, $passage) {
-    global $bible_ver, $wp_bible_inline;
+function render_bible_passage_html($content, $match) {
+	global $url1, $url2;
+    global $bible_ver, $wp_bible_inline, $wp_bible_slim, $biblija_i;
+	
+	// Generate reference text for display
+	$match_encoded = bible_to_ord($match);
+	$biblija_i++;
+	$passage_reference = preg_replace("/($book)\.?(.*)/mi", "$1$2", $match);
+	
+	if (!$wp_bible_slim){
+		// Get bible passage from db/net
+		$bible_text = get_bible_passage($passage_reference);
 
-	$div = $wp_bible_inline ? "div" : "span";
-    $html = "";
-    $html .= "<a class=\"biblija_link\" onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">" . $reference . "</a>";
+		if (is_feed()) {
+			// When used inside a feed, just add a link to biblija.net for the current reference
+			$content = str_replace ($match, "<a class='biblija_link' href='$url1'>$match_encoded</a>", $content);
+		} else {
+			while (strstr ($content, $match)){
+				$div = $wp_bible_inline ? "div" : "span";
+				$html = "<a class='biblija_link' onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">" . $match_encoded . "</a>";
+				$html .= "<$div class='biblija_lay" . ($wp_bible_inline ? "_inline" : "") . "' onclick='biblija_showhide(\"biblija_l$biblija_i\");' id='biblija_l" . $biblija_i . "'>";
+					$html .= "<b><a title='". $bible_ver[$wp_bible_default_version] . "' href='" . $url1 . "'>" . $match_encoded . "</a></b><br />";
+					$html .= $bible_text . "<br/>";
+					$html .= "<span class='pull-right'>" . $bible_ver[$wp_bible_default_version] . "</span>";
+				$html .= "</$div>";
 
-    $html .= "<$div class='biblija_lay" . ($wp_bible_inline ? "_inline" : "") . "' onclick='biblija_showhide(\"biblija_l$biblija_i\");' id='biblija_l" . $biblija_i . "'>";
-        $html .= "<b><a title='". $bible_ver[$wp_bible_default_version] . "' href='" . $url1 . "'>" . $reference . "</a></b><br />";
-        $html .= $passage . "<br/>";
-        $html .= "<span>" . $bible_ver[$wp_bible_default_version] . "</span>";
-    $html .= "</$div>";
-
-    return bible_str_replace_once ($match, $html, $content);
+				$content = bible_str_replace_once ($match, $html, $content);
+				$biblija_i++;
+			}
+		}
+	} else {
+		if ($wp_bible_new_window) {
+			$target = "target='_blank'";
+		} else {
+			$target = "";
+		}
+		$content = str_replace ($match, "<a $target class='biblija_link' href='$url1'>$match_encoded</a>", $content);
+	}
+	
+	return $content;
 }
 
 
