@@ -219,6 +219,13 @@ function bible_version_cmp($a, $b)
 }
 
 
+function bible_version_display($version) {
+	global $bible_ver;
+	
+	return $bible_ver[$version];
+}
+
+
 // sort bible book array
 usort($my_book, "bible_my_cmp");
 
@@ -254,7 +261,7 @@ if ($wp_bible_new_window == ''){
 
 $wp_bible_default_version = get_option('wp_bible_default_version');
 if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_default_version]))){
-   $wp_bible_default_version = 15;
+   $wp_bible_default_version = 18;
    update_option('wp_bible_default_version', $wp_bible_default_version);
 }
 
@@ -267,8 +274,7 @@ $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 
 
 // what and where should the admin interface be displayed exactly
-function bible_admin_action()
-{
+function bible_admin_action() {
    global $biblija_version, $bible_ver, $wpdb, $wp_bible_default_width, $wp_bible_default_version, $wp_bible_slim, $wp_bible_inline, $wp_bible_new_window;
 
     if (isset($_POST['biblija_update'])) {
@@ -335,8 +341,7 @@ function bible_admin_action()
 }
 
 // Initialize the admin interface
-function bible_add_plugin_to_admin_menu()   
-{  
+function bible_add_plugin_to_admin_menu() {  
    add_submenu_page('options-general.php', 'WP-Bible', 'WP-Bible', 10, __FILE__, 'bible_admin_action');  
 }  
 
@@ -355,7 +360,7 @@ function bible_to_ord ($str){
     return $out;
 }
 
-// Render required lines in page header (hooks into wp_head)
+// Render required lines in page header (hooks into wp_foot)
 function bible_head (){
     global $biblija_head_displayed, $biblija_warn;
     global $wp_bible_default_width, $biblija_version, $wp_bible_slim;
@@ -370,22 +375,18 @@ function bible_head (){
         if (!$wp_bible_slim ){
     
             ?>
-            <script type="text/javascript">
-                var biblija_cnt = 200;
-                function biblija_showhide (id){
-                    var obj = document.getElementById(id);
-                    if (obj.style.display == "inline")
-                        obj.style.display = "none";
-                    else
-                        obj.style.display = "inline";
-                    obj.style.zIndex = biblija_cnt++;
-                }
-            </script>
             <style type="text/css" id="wp-bible">
-                sup { font-size: 70%; vertical-align: top; }
-                .biblija_lay { display: none; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing:normal; }
-                .biblija_lay_inline { background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; ?> word-spacing:normal; }
+				.wp-bible-version { text-align: right; font-size: 90%; color: #999; line-height: 2em; }
+                
+				sup { font-size: 70%; vertical-align: top; top: 0.5em; }
+                
+				.wp-bible-passage { display: none; background:#FFFFFF; border:1px double #000000; color:#000000; font-size:90%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:normal; margin:0px; opacity:0.9; overflow:visible; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; position: absolute; width: <?php echo "$wp_bible_default_width"."px;"; ?> word-spacing: normal; }
+                
+				.wp-bible-passage.inline { position: initial; background: none; border:none; border-left: 1px solid #999; color:#000000; font-size:100%; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:1.7em; margin:0px; opacity:1; padding:10px; text-align:left; text-indent:0pt; text-transform:none; vertical-align:baseline; word-spacing:normal; }
+				
+				.wp-bible-passage.inline b { display: none; }
             </style>
+			<script src="/wp-content/plugins/wp-bible/wp-bible.js"></script>
         <?php
         }
 
@@ -431,7 +432,7 @@ function find_passage_references($content) {
 
             // For each match found, find the passage data
             foreach ($matches[0] as $curr_match){
-				$content = render_bible_passage_html($content, $curr_match);
+				$content = str_replace($curr_match, render_bible_passage_html($curr_match), $content);
             }
         }
     }
@@ -442,6 +443,7 @@ function find_passage_references($content) {
 }
 
 
+// Gets the bible passage for the passed reference
 function get_bible_passage($passage_reference) {
     global $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy;
 
@@ -454,7 +456,6 @@ function get_bible_passage($passage_reference) {
     // If not found in local database, get it from biblija.net
     if (!strlen($bible_text)){
         // HTTP call ibase_num_params
-        $url1 = $biblija_url1.urlencode($passage_reference);
         $url2 = $biblija_url2.urlencode($passage_reference);
 
         // HTTP call
@@ -493,14 +494,16 @@ function get_bible_passage($passage_reference) {
 }
 
 
-function render_bible_passage_html($content, $match) {
-	global $url1, $url2;
-    global $bible_ver, $wp_bible_inline, $wp_bible_slim, $biblija_i;
+// Renders the html required for displaying a bible match
+function render_bible_passage_html($match) {
+	global $biblija_url1;
+    global $bible_ver, $wp_bible_default_version, $wp_bible_inline, $wp_bible_slim;
 	
 	// Generate reference text for display
 	$match_encoded = bible_to_ord($match);
-	$biblija_i++;
 	$passage_reference = preg_replace("/($book)\.?(.*)/mi", "$1$2", $match);
+	$url1 = $biblija_url1.urlencode($passage_reference);
+	$html = "";
 	
 	if (!$wp_bible_slim){
 		// Get bible passage from db/net
@@ -508,20 +511,20 @@ function render_bible_passage_html($content, $match) {
 
 		if (is_feed()) {
 			// When used inside a feed, just add a link to biblija.net for the current reference
-			$content = str_replace ($match, "<a class='biblija_link' href='$url1'>$match_encoded</a>", $content);
+			$html = "<a class='wp-bible-reference' href='$url1'>$match_encoded</a>";
 		} else {
-			while (strstr ($content, $match)){
+			//while (strstr ($content, $match)) {
 				$div = $wp_bible_inline ? "div" : "span";
-				$html = "<a class='biblija_link' onmouseover=\"biblija_showhide('biblija_l$biblija_i');\">" . $match_encoded . "</a>";
-				$html .= "<$div class='biblija_lay" . ($wp_bible_inline ? "_inline" : "") . "' onclick='biblija_showhide(\"biblija_l$biblija_i\");' id='biblija_l" . $biblija_i . "'>";
-					$html .= "<b><a title='". $bible_ver[$wp_bible_default_version] . "' href='" . $url1 . "'>" . $match_encoded . "</a></b><br />";
+				$html = "<a class='wp-bible-reference' wp-bible-reference='$passage_reference'>" . $match_encoded . "</a>";
+				$html .= "<$div 
+								class='wp-bible-passage " . ($wp_bible_inline ? "inline" : "") . "' 
+								wp-bible-reference='$passage_reference' 
+								wp-bible-version='$bible_ver[$wp_bible_default_version]'>";
+					$html .= "<b><a title='" . bible_version_display($wp_bible_default_version) . "' href='$url1'>" . $match_encoded . "</a><br /></b>";
 					$html .= $bible_text . "<br/>";
-					$html .= "<span class='pull-right'>" . $bible_ver[$wp_bible_default_version] . "</span>";
+					$html .= "<small class='wp-bible-version'>" . bible_version_display($wp_bible_default_version) . "</small>";
 				$html .= "</$div>";
-
-				$content = bible_str_replace_once ($match, $html, $content);
-				$biblija_i++;
-			}
+			//}
 		}
 	} else {
 		if ($wp_bible_new_window) {
@@ -529,10 +532,10 @@ function render_bible_passage_html($content, $match) {
 		} else {
 			$target = "";
 		}
-		$content = str_replace ($match, "<a $target class='biblija_link' href='$url1'>$match_encoded</a>", $content);
+		$html = "<a $target class='wp-bible-reference' href='$url1'>$match_encoded</a>";
 	}
 	
-	return $content;
+	return $html;
 }
 
 
