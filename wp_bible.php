@@ -50,12 +50,7 @@ function bible_str_replace_once($search, $replace, $subject)
     }
    
     return($ret);
-}   
-
-
-/* First, we need to make an instance of the class */
-$biblija_snoopy = new Snoopy();
-$biblija_snoopy->agent = "WP-Bible plugin/".$biblija_version." (+http://wordpress.org/extend/plugins/wp-bible/)";
+}
 
 $bible_ver[1] = "Slovenian: Slovenski standardni prevod (1997) - SSP";
 $bible_ver[4] = "Slovenian: Jubilejni prevod NZ (1984) - JUB";
@@ -267,7 +262,7 @@ if (((int)$wp_bible_default_version == 0) || (!strlen($bible_ver[$wp_bible_defau
 
 // API Settings
 $biblija_url1 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&amp;pos=0&amp;set=5&amp;m=";
-$biblija_url2 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&l=sl&t=3&m=";
+$biblija_url2 = "http://www.biblija.net/biblija.cgi?id".($wp_bible_default_version-1)."=1&pos=0&set=5&l=en&t=3&m=";
 $plugin_url = "http://wordpress.org/extend/plugins/wp-bible/";
 
         
@@ -355,9 +350,28 @@ function bible_to_ord ($str){
     $out = "";
     $j = strlen($str);
     for ($i=0; $i<$j;$i++)
-        $out .= "&#".ord(substr($str,$i)).";";
+        $out .= "&#" . ordutf8(substr($str,$i)).";";
 
     return $out;
+}
+
+function ordutf8($string, &$offset) {
+    $code = ord(substr($string, $offset,1)); 
+    if ($code >= 128) {        //otherwise 0xxxxxxx
+        if ($code < 224) $bytesnumber = 2;                //110xxxxx
+        else if ($code < 240) $bytesnumber = 3;        //1110xxxx
+        else if ($code < 248) $bytesnumber = 4;    //11110xxx
+        $codetemp = $code - 192 - ($bytesnumber > 2 ? 32 : 0) - ($bytesnumber > 3 ? 16 : 0);
+        for ($i = 2; $i <= $bytesnumber; $i++) {
+            $offset ++;
+            $code2 = ord(substr($string, $offset, 1)) - 128;        //10xxxxxx
+            $codetemp = $codetemp*64 + $code2;
+        }
+        $code = $codetemp;
+    }
+    $offset += 1;
+    if ($offset >= strlen($string)) $offset = -1;
+    return $code;
 }
 
 // Render required lines in page header (hooks into wp_foot)
@@ -445,43 +459,55 @@ function find_passage_references($content) {
 
 // Gets the bible passage for the passed reference
 function get_bible_passage($passage_reference) {
-    global $biblija_url1, $biblija_url2, $wpdb, $biblija_snoopy;
+    global $biblija_url1, $biblija_url2, $wpdb;
 
+	$url2 = $biblija_url2 . urlencode(utf8_decode($passage_reference));
+	
     // see if the requested reference is stored in local database
     $table_name = $wpdb->prefix . "wp_bible";
-    $bible_res = $wpdb->get_col("SELECT text FROM $table_name WHERE ref LIKE '".$wpdb->escape($url_match)."';");
+    $bible_res = $wpdb->get_col("SELECT text FROM $table_name WHERE ref LIKE '" . $wpdb->escape($passage_reference) . "';");
     $bible_text = $bible_res[0];
-
 
     // If not found in local database, get it from biblija.net
     if (!strlen($bible_text)){
-        // HTTP call ibase_num_params
-        $url2 = $biblija_url2.urlencode($passage_reference);
-
         // HTTP call
-        $biblija_result = $biblija_snoopy->fetch($url2);
+        $biblija_result = wp_remote_get($url2);
+		
 
         // If the HTTP call yields a result
         if ($biblija_result) {
             // Take the HTML contents - Deprecated
-            $bible_text = $biblija_snoopy->results;
+            $bible_text = $biblija_result["body"];
 
             // Remove all unwanted elements
-            $bible_text = preg_replace ("@<script .*?/script>@im", "", $bible_text);
-            $bible_text = preg_replace ("@<a .*?/a>@im", "", $bible_text);
-            $bible_text = preg_replace ("@<h3.*?/h3>@im", "", $bible_text);
-            $bible_text = preg_replace ("@\(.*?\)@m", "", $bible_text);
-            $bible_text = preg_replace ("@<strong.*?/strong>@im", "", $bible_text);
-            $bible_text = preg_replace ("@<!--.*?-->@m", "", $bible_text);
-            $bible_text = preg_replace ("@<.*?".">@m", "", $bible_text);
-            $bible_text = trim($bible_text);
+            $bible_text = preg_replace ("@<script .*?/script>@im", "", $bible_text);	// Remove all script tags
+            $bible_text = preg_replace ("@<a .*?/a>@im", "", $bible_text);				// Remove all links
+            $bible_text = preg_replace ("@<h3.*?/h3>@im", "", $bible_text);				// Remove all h3 tags
+            $bible_text = preg_replace ("@\(.*?\)@m", "", $bible_text);					// Remove text between brackets - what the fuck for?
+            $bible_text = preg_replace ("@<strong.*?/strong>@im", "", $bible_text);		// Remove all strong markings
+            $bible_text = preg_replace ("@<!--.*?-->@m", "", $bible_text);				// Remove all comments
+		
+			// find all chapter indicators
+			$bible_text = preg_replace ("@<span class=\"c\">(\d*)</span>@im", "{{\\1}}", $bible_text);
+			// find all verse indicators
+			$bible_text = preg_replace ("@<span class=\"v1 v\">(\d*)@im", "[[\\1]]", $bible_text);
+			// find all title indicators
+			$bible_text = preg_replace ("@<div class=\"s\">(.*)\n</div>@im", "!!\\1!!", $bible_text);
+			
+            $bible_text = preg_replace ("@<.*?".">@m", "", $bible_text);				// Remove all tags
+            $bible_text = trim($bible_text);											// Remove whitespace
 
             if (function_exists ('iconv')) {
                 $bible_text = iconv("CP1250", "UTF-8", $bible_text);
             }
-            $bible_text = preg_replace ("@([^#0-9])([0-9]+)@m", "\\1<sup>\\2</sup>", $bible_text);
+			
+			// Create supscripts from verses
+            //$bible_text = preg_replace ("@([^#0-9])([0-9]+)@m", "\\1<sup>\\2</sup>", $bible_text);
+            $bible_text = preg_replace ("@\[\[(\d*)\]\]@m", "<sup>$1</sup>", $bible_text);
+            $bible_text = preg_replace ("@{{(\d*)}}@m", "<div class=\"chapter\">$1</div>", $bible_text);
+            $bible_text = preg_replace ("@!!(.*)!!@m", "<p class=\"chapter-title\">$1</p>", $bible_text);
 
-            // If, after all the removing, there is still some text left -> Store it in the database for future use
+            // If, after all the removing, there is still some text left -> Store it in the database for future use (caching)
             if (strlen($bible_text)) {
                 $wpdb->query("INSERT INTO $table_name VALUES (0, '".$wpdb->escape($passage_reference). "','" . $wpdb->escape($bible_text) . "')");
             }
@@ -500,9 +526,9 @@ function render_bible_passage_html($match) {
     global $bible_ver, $wp_bible_default_version, $wp_bible_inline, $wp_bible_slim;
 	
 	// Generate reference text for display
-	$match_encoded = bible_to_ord($match);
+	
 	$passage_reference = preg_replace("/($book)\.?(.*)/mi", "$1$2", $match);
-	$url1 = $biblija_url1.urlencode($passage_reference);
+	$url1 = $biblija_url1 . urlencode(utf8_decode($passage_reference));
 	$html = "";
 	
 	if (!$wp_bible_slim){
@@ -511,19 +537,20 @@ function render_bible_passage_html($match) {
 
 		if (is_feed()) {
 			// When used inside a feed, just add a link to biblija.net for the current reference
-			$html = "<a class='wp-bible-reference' href='$url1'>$match_encoded</a>";
+			$html = "<a class='wp-bible-reference' href='$url1'>$match</a>";
 		} else {
 			//while (strstr ($content, $match)) {
 				$div = $wp_bible_inline ? "div" : "span";
-				$html = "<a class='wp-bible-reference' wp-bible-reference='$passage_reference'>" . $match_encoded . "</a>";
+				$html = "<a class='wp-bible-reference' wp-bible-reference='$passage_reference'>" . $match . "</a>";
 				$html .= "<$div 
 								class='wp-bible-passage " . ($wp_bible_inline ? "inline" : "") . "' 
 								wp-bible-reference='$passage_reference' 
 								wp-bible-version='$bible_ver[$wp_bible_default_version]'>";
-					$html .= "<b><a title='" . bible_version_display($wp_bible_default_version) . "' href='$url1'>" . $match_encoded . "</a><br /></b>";
+					$html .= "<h3><a title='" . bible_version_display($wp_bible_default_version) . "' href='$url1'>" . $match . "</a></h3>";
 					$html .= $bible_text . "<br/>";
 					$html .= "<small class='wp-bible-version'>" . bible_version_display($wp_bible_default_version) . "</small>";
 				$html .= "</$div>";
+				
 			//}
 		}
 	} else {
