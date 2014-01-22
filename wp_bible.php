@@ -490,7 +490,7 @@ function get_bible_passage($passage_reference) {
 			// find all chapter indicators
 			$bible_text = preg_replace ("@<span class=\"c\">(\d*)</span>@im", "{{\\1}}", $bible_text);
 			// find all verse indicators
-			$bible_text = preg_replace ("@<span class=\"v1 v\">(\d*)@im", "[[\\1]]", $bible_text);
+			$bible_text = preg_replace ("@<span class=\"v\d? v\">(\d*)@im", "[[\\1]]", $bible_text);
 			// find all title indicators
 			$bible_text = preg_replace ("@<div class=\"s\">(.*)\n</div>@im", "!!\\1!!", $bible_text);
 			
